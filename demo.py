@@ -73,4 +73,68 @@ class Solution:
             return rotateArray[middle]
 """
 """
-# 从尾到头打印链表"""
+# 从尾到头打印链表
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+    def set_attr(self, next):
+        self.next = next
+
+class Solution:
+    def printListFromTailToHead(self, listNode):
+        l_head = listNode
+        if l_head == None:
+            return False
+        else:
+            nodelist = []
+            nodelist_reverse = []
+            while listNode.next != None:
+                nodelist.append(listNode.val)
+                listNode = listNode.next
+            nodelist.append(listNode.val)
+            for i in range(len(nodelist)):
+                nodelist_reverse.append(nodelist.pop())
+            return nodelist_reverse
+
+a = ListNode(1)
+b = ListNode(2)
+c = ListNode(3)
+a.set_attr(b)
+b.set_attr(c)
+c.set_attr(None)
+s = Solution()
+print(s.printListFromTailToHead(a))
+"""
+"""
+# 重建二叉树
+# 前序遍历：NLR, 中序遍历：LNR，后序遍历：LRN
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+    def set_kids(self, l, r):
+        self.left = l
+        self.right = r
+
+class Solution:
+    def reConstructBinaryTree(self, pre, tin):
+        # 递归
+        if not pre or not tin:
+            return None
+        root = TreeNode(pre.pop(0))
+        index = tin.index(root.val)
+        root.left = self.reConstructBinaryTree(pre, tin[: index])
+        root.right = self.reConstructBinaryTree(pre, tin[index + 1 :])
+        return root
+
+pre = [1, 2, 4, 7, 3, 5, 6, 8]
+tin = [4, 7, 2, 1, 5, 3, 8, 6]
+s = Solution()
+print(s.reConstructBinaryTree(pre, tin).right.val)
+"""
+"""
+# 用两个栈实现队列"""
