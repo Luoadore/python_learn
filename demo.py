@@ -137,4 +137,77 @@ s = Solution()
 print(s.reConstructBinaryTree(pre, tin).right.val)
 """
 """
-# 用两个栈实现队列"""
+# 用两个栈实现队列
+# 栈先进先出，队列先进后出
+class Queue():
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+    def push(self, node):
+        self.stack1.append(node)
+    def pop(self):
+        if len(self.stack2) == 0:
+            while len(self.stack1) != 0:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
+s = Queue()
+s.push(1)
+s.push(2)
+s.push(3)
+print(s.stack1)
+s.pop()
+print(s.stack2)
+"""
+"""
+# 佩波那契数列
+class Solution:
+    def Fibonacci(self, n):
+        a = [0, 1]
+        if n > 1:
+            for i in range(2, n + 1):
+                a.append(a[i - 2] + a[i - 1])
+        return a[n]
+"""
+"""
+# 跳台阶
+# 台阶1，1种；台阶2，2种；台阶n，跳1次之后f（n-1）种，跳2个之后f（n-2）种，求和。
+class Solution:
+    def jumpFloor(self, number):
+        n = [1, 2]
+        if number > 2:
+            for i in range(2, number + 1):
+                n.append(n[i - 2] + n[i - 1])
+        if number < 1:
+            return False
+        else:
+            return n[number - 1]
+"""
+"""
+# 变态跳台阶"
+# f(n) = f(n-1) + f(n-2) +...+ f(1)，即f(n) = 2f(n-1)
+import math
+class Solution:
+    def jumpFloorII(self, number):
+        n = [1]
+        if number > 0:
+            #for i in range(1, number + 1):
+             #   n_0 = 0
+              #  for j in range(i):
+               #     n_0 += n[j]
+                #n.append(n_0 + 1)
+        #return n[number - 1]
+            return math.pow(2, number - 1)
+"""
+"""
+# 矩形覆盖
+# f(n) = f(n - 1) + f(n - 2), 一个2*1竖、横放时
+class Solution:
+    def rectCover(self, number):
+        n = [1, 2]
+        if number > 2:
+            for i in range(2, number + 1):
+                n.append(n[i - 1] + n[i - 2])
+        return n[number - 1]
+"""
+"""
+# 二进制中1的个数"""
