@@ -190,4 +190,46 @@ int2 = functools.partial(int, base = 2)
 print(int2('10010'))
 print(int('10010'))"""
 
-"""exercise 17"""
+"""exercise 17
+class Screen:
+    @property
+    def width(self):
+        return self._width
+    @width.setter
+    def width(self, val):
+        self._width = val
+
+    @property
+    def height(self):
+        return self._height
+    @height.setter
+    def height(self, val):
+        self._height = val
+
+    @property
+    def resolution(self):
+        return self._width * self._height
+
+s = Screen()
+s.width = 1024
+s.height = 768
+print(s.resolution)
+assert s.resolution == 786432, '1024 * 786 = %d ?' % s.resolution"""
+
+"""exercise 18
+# 佩波那契数列
+class Fib:
+    def __init__(self):
+        self.a, self.b = 0, 1
+    def __iter__(self):
+        return self # 实例本身就是迭代对象，故返回自己
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b
+        if self.a > 100000:
+            raise StopIteration();
+        return self.a
+
+for n in Fib():
+    print(n)"""
+
+""" exercise 19"""
