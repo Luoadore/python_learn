@@ -232,4 +232,20 @@ class Fib:
 for n in Fib():
     print(n)"""
 
-""" exercise 19"""
+""" exercise 19
+from enum import Enum
+Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May'))
+for name, member in Month.__members__.items():
+    print(name, "=>", member, ',', member.value)"""
+
+"""exercise 20
+# logging
+import logging
+logging.basicConfig(level = logging.INFO)
+
+s = '0'
+n = int(s)
+logging.info('n = %d' % n)
+print(10 / n)"""
+
+"""exercise 21"""
