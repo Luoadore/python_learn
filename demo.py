@@ -210,4 +210,141 @@ class Solution:
         return n[number - 1]
 """
 """
-# 二进制中1的个数"""
+# 二进制中1的个数
+# 按位与
+class Solution:
+    def NumberOf1(self, n):
+        count = 0
+        for j in range(32):
+            i = 1
+            i = i << j
+            print(n & i)
+            if n & i:
+                count += 1
+        return count
+# 一个数减1后和本身与，得1的次数
+    def NumberOf1(self, n):
+        count = 0
+        while n:
+            count += 1
+            n = (n - 1) & n
+        return count
+s = Solution()
+print(s.NumberOf1(10))
+"""
+"""
+# 数值的整数次方
+class Solution:
+    def Power(self, base, exponent):
+        if base == 0:
+            if exponent < 0:
+                raise ValueError('Invalid error! ')
+            else:
+                return 0
+        num, s = abs(exponent), 1
+        for i in range(num):
+            s = s * base
+        if exponent < 0:
+            s = 1.0 / s
+        return s
+# 递归方法
+class Solution:
+    def Power(self, base, exponent):
+        if base == 0:
+            if exponent < 0:
+                raise ValueError('Invalid error! ')
+            else:
+                return 0
+        if exponent >= 0:
+            return self.power2(base, abs(exponent))
+        else:
+            return 1.0 / self.power2(base, abs(exponent))
+    def power2(self, base, exponent):
+        if exponent == 0:
+            return 1
+        if exponent == 1:
+            return base
+        s = self.power2(base, exponent >> 1)
+        s = s * s
+        if (exponent and 1) == 1:
+            s = s * base
+        return s
+s = Solution()
+s.Power(2,3)
+"""
+"""
+# 调整数组顺序使奇数位于偶数前面
+class Solution:
+    def reOrderArray(self, array):
+        re = []
+        for i in range(len(array)):
+            if array[i] % 2 != 0:
+                re.append(array[i])
+                array[i] = []
+        for i in range(len(array)):
+            if array[i] != []:
+                re.append(array[i])
+        return re
+s = Solution()
+print(s.reOrderArray([1, 2, 3, 4, 5, 6, 7]))
+"""
+"""
+# 输出链表中倒数第k个节点
+class ListNode:
+    def __init__(self, x):
+        self.x = x
+        self.next = None
+    def set_next(self, next):
+        self.next = next
+class Solution:
+    def FindKthToTail(self, head, k):
+        if head == None:
+            return None
+        if k == 0:
+            return None
+        i = head
+        for index in range(k - 1):
+            i = i.next
+        if i == None:
+            raise ValueError('Invalid k ! Out of the index.')
+        else:
+            j = head
+            while i.next != None:
+                i = i.next
+                j = j.next
+            return j
+s = Solution()
+a = ListNode(1)
+b = ListNode(2)
+c = ListNode(3)
+d = ListNode(4)
+e = ListNode(5)
+a.set_next(b)
+b.set_next(c)
+c.set_next(d)
+d.set_next(e)
+print(s.FindKthToTail(a, 1).x)
+"""
+"""
+# 二叉树的镜像
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+class Solution:
+    # 返回镜像树的根节点
+    def Mirror(self, root):
+        if root == None:
+            return root
+        if not (root.left or root.right):
+            return root
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+        if root.left:
+            self.Mirror(root.left)
+        if root.right:
+            self.Mirror(root.right)
+        return root
+"""
