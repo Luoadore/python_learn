@@ -326,6 +326,43 @@ d.set_next(e)
 print(s.FindKthToTail(a, 1).x)
 """
 """
+# 反转链表
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+    def set_next(self, next):
+        self.next = next
+class Solution:
+    # 返回ListNode
+    def ReverseList(self, pHead):
+        if pHead == None:
+            return None
+        elif pHead.next == None:
+            return pHead
+
+        head = pHead
+        p_new = None
+        while head != None:
+            p_last = head.next
+            head.next = p_new
+            p_new = head
+            head = p_last
+        return p_new
+a = ListNode(1)
+b = ListNode(2)
+c = ListNode(3)
+d = ListNode(4)
+e = ListNode(5)
+a.set_next(b)
+b.set_next(c)
+c.set_next(d)
+d.set_next(e)
+s = Solution()
+print(s.ReverseList(a).val)
+print(a.val)
+"""
+"""
 # 二叉树的镜像
 class TreeNode:
     def __init__(self, x):
@@ -347,4 +384,43 @@ class Solution:
         if root.right:
             self.Mirror(root.right)
         return root
+"""
+"""
+# 顺时针打印矩阵
+class Solution:
+    # matrix类型为二维列表，需要返回列表
+    def printMatrix(self, matrix):
+        row = len(matrix)
+        if row == 0:
+            return []
+        elif len(matrix[0]) == 0:
+            return []
+        else:
+            col = len(matrix[0])
+            start = 0
+            array = []
+            while (col > start * 2 and row > start * 2):
+                array_min = self.printMatrixCircle(matrix, row, col, start)
+                array.extend(array_min)
+                start += 1
+            return array
+    def printMatrixCircle(self, matrix, row, col, start):
+        array = []
+        endx = col - 1 - start
+        endy = row - 1 - start
+        for i in range(start, endx + 1):
+            array.append(matrix[start][i])
+        if start < endy:
+            for i in range(start + 1, endy + 1):
+                array.append(matrix[i][endx])
+        if ((start < endx) and (start < endy)):
+            for i in range(-start - 2, -endx - 2, -1):
+                array.append(matrix[endy][i])
+        if ((start < endx) and (start < endy - 1)):
+            for i in range(-start - 2, -endy - 1, -1):
+                array.append(matrix[i][start])
+        return array
+s = Solution()
+m = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+print(s.printMatrix(m))
 """
