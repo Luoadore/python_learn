@@ -248,4 +248,70 @@ n = int(s)
 logging.info('n = %d' % n)
 print(10 / n)"""
 
-"""exercise 21"""
+"""exercise 21
+# 单元测试
+import unittest
+
+# 需要测试的代码
+class Dict(dict):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(r"'Dict' has no attribute '%s'" % key)
+    def __setattr__(self, key, value):
+        self[key] = value
+##########################
+
+class TestDict(unittest.TestCase):
+    def test_init(self):
+        d = Dict(a = 1, b = 'test')
+        self.assertEqual(d.a, 1)
+        self.assertEqual(d.b, 'test')
+        self.assertTrue(isinstance(d, dict))
+    def test_key(self):
+        d = Dict()
+        d['key'] = 'value'
+        self.assertEqual(d.key, 'value')
+    def test_attr(self):
+        d = Dict()
+        with self.assertRaises(KeyError):
+            value = d['empty']
+    def test_attrerror(self):
+        d = Dict()
+        with self.assertRaises(AttributeError):
+            value = d.empty
+    def setUp(self):
+        print('setUp...')
+    def tearDown(self):
+        print('tearDown...')
+if __name__ == '__main__':
+    unittest.main()"""
+
+"""exercise 22
+def fact(n):"""
+"""
+    This is a function calculating the n!.
+
+    >>> fact(1)
+    1
+    >>> fact(5)
+    120
+    >>> fact(0)
+    Traceback (most recent call last):
+        ...
+    ValueError: Value error.
+    """
+"""
+    if n < 1:
+        raise ValueError('Value error.')
+    if n == 1:
+        return 1
+    return n * fact(n - 1)
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()"""
+
+"""exercise 23"""
