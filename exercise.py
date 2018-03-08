@@ -314,4 +314,25 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()"""
 
-"""exercise 23"""
+"""exercise 23
+import os
+# s = [x for x in os.listdir('F:\codestore\python_learn')]
+# print(s)
+def Findfile(path, s):
+    file = [x for x in os.listdir(path) if os.path.isfile(os.path.join(path, x))]
+    folder = [x for x in os.listdir(path) if os.path.isdir(os.path.join(path, x))]
+    print(file)
+    print(folder)
+    for i in range(len(file)):
+        if s in file[i]:
+            print(file[i])
+    for i in range(len(folder)):
+        f_file = [x for x in os.listdir(os.path.join(path, folder[i]))]
+        for j in range(len(f_file)):
+            if s in f_file[j]:
+                print(os.path.join(folder[i], f_file[j]))
+
+mypath = 'F:\codestore\hyperspectral_exp_orz\\tf_try\GANs'
+Findfile(mypath, 'cgan')"""
+
+"""exercise 24"""
