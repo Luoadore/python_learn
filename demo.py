@@ -363,6 +363,51 @@ print(s.ReverseList(a).val)
 print(a.val)
 """
 """
+# 合并两个排序的链表
+class Solution:
+    # 返回合并后列表
+    def Merge(self, pHead1, pHead2):
+        if pHead1 == None:
+            return pHead2
+        if pHead2 == None:
+            return pHead1
+        if pHead1.val < pHead2.val:
+            p_new = pHead1
+            p_new.next = self.Merge(pHead1.next, pHead2)
+        else:
+            p_new = pHead2
+            p_new.next = self.Merge(pHead1, pHead2.next)
+        return p_new
+"""
+"""
+# 树的子结构
+class Solution:
+    def HasSubtree(self, pRoot1, pRoot2):
+        if pRoot1 == None:
+            return False
+        if pRoot2 == None:
+            return False
+        result = False
+        if pRoot1.val == pRoot2.val:
+            result = self.DoesTree1HaveTree2(pRoot1, pRoot2)
+        if result != True:
+            result = self.HasSubtree(pRoot1.left, pRoot2)
+        if result != True:
+            result = self.HasSubtree(pRoot1.right, pRoot2)
+        return result
+    def DoesTree1HaveTree2(self, pRoot1, pRoot2):
+        # tree2没遍历完，tree1遍历完
+        if (pRoot1 == None) and (pRoot2 != None):
+            return False
+        # tree2遍历完
+        if pRoot2 == None:
+            return True
+        if pRoot1.val != pRoot2.val:
+            return False
+        result = (self.DoesTree1HaveTree2(pRoot1.left, pRoot2.left) and self.DoesTree1HaveTree2(pRoot1.right, pRoot2.right))
+        return result
+"""
+"""
 # 二叉树的镜像
 class TreeNode:
     def __init__(self, x):
@@ -423,4 +468,7 @@ class Solution:
 s = Solution()
 m = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 print(s.printMatrix(m))
+"""
+"""
+# 包含min函数的栈
 """
