@@ -471,4 +471,48 @@ print(s.printMatrix(m))
 """
 """
 # 包含min函数的栈
+# 两个栈，一个存数据，一个存最小值
+class Solution:
+    def __init__(self):
+        self.m_data = []
+        self.m_min = []
+    def push(self, node):
+        self.m_data.append(node)
+        if len(self.m_min) == 0:
+            self.m_min.append(node)
+        elif node <= self.m_min[-1]:
+            self.m_min.append(node)
+        else:
+            self.m_min.append(self.m_min[-1])
+    def pop(self):
+        if (len(self.m_data) != 0) and (len(self.m_min) != 0):
+            self.m_data.pop()
+            self.m_min.pop()
+    def top(self):
+        if (len(self.m_data) != None) and (len(self.m_min) != 0):
+            return self.m_data[-1]
+    def min(self):
+        if (len(self.m_data) != None) and (len(self.m_min) != 0):
+            return self.m_min[-1]
+"""
+
+"""
+# 栈的压入、弹出序列
+# 辅助栈，比较pop栈顶和从push取到辅助栈栈顶是否相同
+class Solution:
+    def IsPopOrder(self, pushV, popV):
+        if (len(pushV) == 0) or (len(popV) == 0) or (len(pushV) != len(popV)):
+            return False
+        judge = []
+        for i in pushV:
+            judge.append(i)
+            while len(judge) and (judge[-1] == popV[0]):
+                judge.pop()
+                popV.pop(0)
+        if len(judge):
+            return False
+        return True
+s = Solution()
+print(s.IsPopOrder([1, 2, 3, 4, 5], [4, 5, 3, 2, 1]))
+print(s.IsPopOrder([1, 2, 3, 4, 5], [4, 3, 5, 1, 2]))
 """
