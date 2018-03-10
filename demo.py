@@ -516,3 +516,55 @@ s = Solution()
 print(s.IsPopOrder([1, 2, 3, 4, 5], [4, 5, 3, 2, 1]))
 print(s.IsPopOrder([1, 2, 3, 4, 5], [4, 3, 5, 1, 2]))
 """
+
+"""
+# 从上往下打印二叉树
+# 广度优先遍历用队列实现
+class Solution:
+    # 返回从上到下每个节点值列表，例：[1,2,3]
+    def PrintFromTopToBottom(self, root):
+        tree = []
+        tree_queue = []
+        if root != None:
+            tree_queue.append(root)
+            while len(tree_queue) != 0:
+                node = tree_queue.pop(0)
+                tree.append(node.val)
+                if node.left != None:
+                    tree_queue.append(node.left)
+                if node.right != None:
+                    tree_queue.append(node.right)
+        return tree
+"""
+
+"""
+# 二叉搜索树的后序遍历序列
+class Solution:
+    def VerifySquenceOfBST(self, sequence):
+        if len(sequence) == 0:
+            return False
+        root = sequence[-1]
+        index = 0
+        left, right = [], []
+        while sequence[index] < root:
+            left.append(sequence[index])
+            index += 1
+        for i in range(index, len(sequence) - 1):
+            right.append(sequence[i])
+        right = [x for x in right if x > root]
+        result = False
+        if len(left) + len(right) == len(sequence) - 1:
+            result = True
+        if len(left) != 0:
+            result = result and self.VerifySquenceOfBST(left)
+        if len(right) != 0:
+            result = result and self.VerifySquenceOfBST(right)
+        return result
+s = Solution()
+print(s.VerifySquenceOfBST([5, 7, 6, 9, 11, 10, 8]))
+print(s.VerifySquenceOfBST([4, 6, 7, 5]))
+print(s.VerifySquenceOfBST([7, 4, 6, 5]))
+"""
+
+"""
+# 二叉树中和为某一值的路径"""
