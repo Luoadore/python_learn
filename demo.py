@@ -568,3 +568,19 @@ print(s.VerifySquenceOfBST([7, 4, 6, 5]))
 
 """
 # 二叉树中和为某一值的路径"""
+
+"""
+# m种颜色n个扇形
+# n个扇形时，相邻扇形之间不能同色，共有m*(m - 1)^(n - 1)种染色方法，但由于An和A1相邻，应排除其同色的情况，即相当于两块合成一块扇形，n-1个扇形
+# 的染色方法， 则an = m*(m - 1)^(n - 1)-an-1
+def tuse(m, n):
+    if m < 3 or n < 1:
+        return False
+    result = 0
+    if n == 1:
+        result = m
+    elif n == 2:
+        result = m * (m - 1)
+    else:
+        result = m * pow(m - 1, n - 1) - tuse(m, n - 1)
+    return result"""
