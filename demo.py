@@ -567,7 +567,34 @@ print(s.VerifySquenceOfBST([7, 4, 6, 5]))
 """
 
 """
-# 二叉树中和为某一值的路径"""
+# 二叉树中和为某一值的路径
+# 深度优先遍历用栈实现
+# not so good at this Q
+class Solution:
+    # 返回二维列表，内部每个列表表示找到的路径
+    def FindPath(self, root, expectNumber):
+        if root == None:
+            return []
+        if root.left == None and root.right == None and root.val == expectNumber:
+            return [[root.val]]
+        res = []
+        res_left = self.FindPath(root.left, expectNumber - root.val)
+        res_right = self.FindPath(root.right, expectNumber - root.val)
+        for i in res_left + res_right:
+            res.append([root.val] + i)
+        return res
+"""
+
+"""
+# 复杂链表的复制"""
+class RandomListNode:
+     def __init__(self, x):
+         self.label = x
+         self.next = None
+         self.random = None
+class Solution:
+    # 返回 RandomListNode
+    def Clone(self, pHead):
 
 """
 # m种颜色n个扇形
