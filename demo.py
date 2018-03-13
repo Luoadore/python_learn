@@ -586,7 +586,8 @@ class Solution:
 """
 
 """
-# 复杂链表的复制"""
+# 复杂链表的复制
+# 分治思想
 class RandomListNode:
      def __init__(self, x):
          self.label = x
@@ -595,6 +596,47 @@ class RandomListNode:
 class Solution:
     # 返回 RandomListNode
     def Clone(self, pHead):
+        if pHead == None:
+            return pHead
+        self.Clonenext(pHead)
+        self.Clonerandom(pHead)
+        return self.Splitnew(pHead)
+    def Clonenext(self, pHead):
+        # 克隆每个节点位于原节点之后
+        old = pHead
+        while old != None:
+            # 这种方法有可能出现none type
+            # new = old
+            # new_next = old.next
+            # old.next = new
+            # new.next = new_next
+            # old = new_next
+            new = RandomListNode(old.label)
+            new.next = old.next
+            old.next = new
+            old = new.next
+        return pHead
+    def Clonerandom(self, pHead):
+        # 克隆随机指针
+        node = pHead
+        while node != None:
+            if node.random != None:
+                ran = node.random
+                node.next.random = ran.next
+            node = node.next.next
+        return pHead
+    def Splitnew(self, pHead):
+        cur = pHead
+        res = pHead.next
+        while cur.next != None:
+            temp = cur.next
+            cur.next = temp.next
+            cur = temp
+        return res
+"""
+
+"""
+# 二叉搜索树与双向链表"""
 
 """
 # m种颜色n个扇形
