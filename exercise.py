@@ -402,3 +402,9 @@ if __name__ == '__main__':
     pr.terminate()"""
 
 """exercise 26"""
+# 一句话实现列表变字典
+a = [1, 2, 3, 4, 5]
+b = ['a', 'b', 'c', 'd', 'e']
+mydict = {x: y for x, y in zip(a, b)}
+print(mydict)
+print(type(mydict))
