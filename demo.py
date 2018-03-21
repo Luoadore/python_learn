@@ -636,7 +636,36 @@ class Solution:
 """
 
 """
-# 二叉搜索树与双向链表"""
+# 二叉搜索树与双向链表
+def Convert(self, pRootOfTree):
+        if pRootOfTree == None:
+            return pRootOfTree
+        if pRootOfTree.left == None and pRootOfTree.right == None:
+            return pRootOfTree
+        # 处理左子树
+        self.Convert(pRootOfTree.left)
+        left = pRootOfTree.left
+
+        # 将左子树链表中最后一个值与根相连
+        if left:
+            while left.right:
+                left = left.right
+            pRootOfTree.left, left.right = left, pRootOfTree
+
+        # 处理右子树
+        self.Convert(pRootOfTree.right)
+        right = pRootOfTree.right
+
+        # 将右子树最前一个值与根相连
+        if right:
+            while right.left:
+                right = right.left
+            pRootOfTree.right, right.left = right, pRootOfTree
+
+        while pRootOfTree.left:
+            pRootOfTree = pRootOfTree.left
+        return pRootOfTree
+"""
 
 """
 # m种颜色n个扇形
