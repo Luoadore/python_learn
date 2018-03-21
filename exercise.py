@@ -401,10 +401,58 @@ if __name__ == '__main__':
     pw.join()
     pr.terminate()"""
 
-"""exercise 26"""
+"""exercise 26
 # 一句话实现列表变字典
 a = [1, 2, 3, 4, 5]
 b = ['a', 'b', 'c', 'd', 'e']
 mydict = {x: y for x, y in zip(a, b)}
 print(mydict)
-print(type(mydict))
+print(type(mydict))"""
+
+"""exercise 27
+# 检查回文数
+list_to_check = [1, 123, 121, 232, 234, 566, 123321]
+def isHui(num):
+    num_l = str(num)
+    l = len(num_l)
+    flag = 1
+    if l == 1:
+        return num
+    else:
+        mid = l // 2
+        for i, j in zip(range(mid), range(-1, -(mid + 1), -1)):
+            if num_l[i] != num_l[j]:
+                flag = 0
+        if flag == 1:
+            return num
+check = []
+for num in list_to_check:
+    if isHui(num) != None:
+        check.append(isHui(num))
+print(check)"""
+
+"""exercise 28
+# 正则表达式
+import re
+mail = re.compile(r'^(\w+)\@(\w+)\.com$')
+a = mail.match('someone@gmail.com').groups()
+print(a)"""
+
+"""exercise 29
+import re
+from datetime import datetime, timezone, timedelta
+
+def to_timestamp(dt_str, tz_str):
+    dt = datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S')
+    u = re.compile(r'UTC([+|-][0-9]+)\:00')
+    d_utc = u.match(tz_str).group(1)
+    dt_utc = dt.replace(tzinfo=timezone(timedelta(hours=int(d_utc))))
+    return dt_utc.timestamp()
+t1 = to_timestamp('2015-6-1 08:10:30', 'UTC+7:00')
+assert t1 == 1433121030.0, t1
+t2 = to_timestamp('2015-5-31 16:10:30', 'UTC-09:00')
+assert t2 == 1433121030.0, t2
+
+print('Pass')"""
+
+"""exercise 30"""
