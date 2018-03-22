@@ -666,6 +666,44 @@ def Convert(self, pRootOfTree):
             pRootOfTree = pRootOfTree.left
         return pRootOfTree
 """
+"""
+# 字符串的排列
+import itertools
+class Solution:
+    def Permutation(self, ss):
+        if len(ss) == 0:
+            return []
+        #l = sorted(list(set(map(''.join, itertools.permutations(ss)))))
+        l = sorted(list(map(''.join, itertools.combinations(ss, 2))))
+        return l
+s = Solution()
+print(s.Permutation('cab'))
+"""
+
+"""
+# 数组中出现次数超过一半的数"""
+
+"""
+# 正则表达式
+class Solution:
+    # s, pattern都是字符串
+    def match(self, s, pattern):
+        if len(s) == 0 and len(pattern) == 0:
+            return True
+        if len(pattern) == 0 and len(s) != 0:
+            return False
+        if len(pattern) > 1 and pattern[1] == '*':
+            if len(s) > 0 and (s[0] == pattern[0] or pattern[0] == '.'):
+                # 匹配2个字符，匹配1个字符，匹配0个字符
+                return (self.match(s[1:], pattern) or self.match(s[1:], pattern[2:]) or self.match(s, pattern[2:]))
+            else:
+                return self.match(s, pattern[2:])
+        if len(s) != 0 and (pattern[0] == '.' or pattern[0] == s[0]):
+            return self.match(s[1:], pattern[1:])
+        return False
+s = Solution()
+print(s.match('bbbba', '.*a*a'))
+"""
 
 """
 # m种颜色n个扇形
