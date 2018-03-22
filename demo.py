@@ -681,7 +681,33 @@ print(s.Permutation('cab'))
 """
 
 """
-# 数组中出现次数超过一半的数"""
+# 数组中出现次数超过一半的数
+class Solution:
+    def MoreThanHalfNum_Solution(self, numbers):
+        if not numbers:
+            return 0
+        num = set(numbers)
+        print(num)
+        if (len(num) - 1) <= len(numbers) / 2:
+            for i in num:
+                var = [x for x in numbers if x == i]
+                print(var)
+                if len(var) > len(numbers) / 2:
+                    return i
+        return 0
+        # solution 2
+        import collections
+        num = collections.Count(numbers)
+        for k, v in num:
+            if v > len(numbers) / 2:
+                return k
+        return 0
+s = Solution()
+print(s.MoreThanHalfNum_Solution([1,2,3,2,4,2,5,4,2]))
+"""
+
+"""
+# 最小的k个数"""
 
 """
 # 正则表达式
