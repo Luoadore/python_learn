@@ -707,7 +707,47 @@ print(s.MoreThanHalfNum_Solution([1,2,3,2,4,2,5,4,2]))
 """
 
 """
-# 最小的k个数"""
+# 最小的k个数
+class Solution:
+    def GetLeastNumbers_Solution(self, tinput, k):
+        if not tinput or not k or k > len(tinput):
+            return []
+        t = sorted(tinput)
+        return t[: k]
+s = Solution()
+print(s.GetLeastNumbers_Solution([2,4,6,3,7,5], 3))
+"""
+
+"""
+# 连续子数组的最大和
+class Solution:
+    def FindGreatestSumOfSubArray(self, array):
+        if len(array) == 0:
+            return False
+        if len(array) == 1:
+            return array[0]
+        sum = 0
+        max_sum = -0xffffff
+        for i in array:
+            sum += i
+            if sum > max_sum:
+                max_sum = sum
+            if sum < 0:
+                sum = 0
+        return max_sum
+s = Solution()
+print(s.FindGreatestSumOfSubArray([6,-3,-2,7,-15,1,2,2]))
+print(s.FindGreatestSumOfSubArray([-2,-8,-1,-6]))
+"""
+
+"""
+# 二叉树的深度
+class Solution:
+    def TreeDepth(self, pRoot):
+        if pRoot == None:
+            return 0
+        return max(self.TreeDepth(pRoot.left), self.TreeDepth(pRoot.right)) + 1
+"""
 
 """
 # 正则表达式
@@ -732,6 +772,34 @@ print(s.match('bbbba', '.*a*a'))
 """
 
 """
+# 二叉树的下一个节点
+class TreeLinkNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+        self.next = None
+class Solution:
+    def GetNext(self, pNode):
+        if pNode == None:
+            return pNode
+        if pNode.right != None:
+            pNode = pNode.right
+            while pNode.left != None:
+                pNode = pNode.left
+            return pNode
+        while pNode.next != None:
+            if pNode == pNode.next.left:
+                return pNode.next
+            pNode = pNode.next
+"""
+
+"""
+# 平衡二叉树"""
+class Solution:
+    def IsBalanced_Solution(self, pRoot):
+
+"""
 # m种颜色n个扇形
 # n个扇形时，相邻扇形之间不能同色，共有m*(m - 1)^(n - 1)种染色方法，但由于An和A1相邻，应排除其同色的情况，即相当于两块合成一块扇形，n-1个扇形
 # 的染色方法， 则an = m*(m - 1)^(n - 1)-an-1
@@ -746,3 +814,18 @@ def tuse(m, n):
     else:
         result = m * pow(m - 1, n - 1) - tuse(m, n - 1)
     return result"""
+
+"""
+# 找零问题
+def coin(coins, price):
+    coinUsed = {i: 0 for i in range(price + 1)}
+    for cents in range(1, price + 1):
+        minCoins = cents
+        for value in coins:
+            if value <= cents:
+                temp = coinUsed[cents - value] + 1
+                if temp < minCoins:
+                    minCoins = temp
+        coinUsed[cents] = minCoins
+        print('面值{0}的硬币数目为{1}'.format(cents, coinUsed[cents]))
+coin([25, 21, 10, 5, 1], 63)"""
