@@ -795,9 +795,9 @@ class Solution:
 """
 
 """
-# 平衡二叉树"""
+# 平衡二叉树
 class Solution:
-    def IsBalanced_Solution(self, pRoot):
+    def IsBalanced_Solution(self, pRoot):"""
 
 """
 # m种颜色n个扇形
@@ -829,3 +829,76 @@ def coin(coins, price):
         coinUsed[cents] = minCoins
         print('面值{0}的硬币数目为{1}'.format(cents, coinUsed[cents]))
 coin([25, 21, 10, 5, 1], 63)"""
+
+"""
+# 树的先中后序遍历，深度优先遍历，广度优先遍历"""
+class tree:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+class tree_op:
+    def preOrderTraversal(self, root):
+        l = []
+        if root != None:
+            l.extend(root.val)
+            l.extend(self.preOrderTraversal(root.left))
+            l.extend(self.preOrderTraversal(root.right))
+        return l
+    def midOrderTraversal(self, root):
+        l = []
+        if root != None:
+            l.extend(self.midOrderTraversal(root.left))
+            l.extend(root.val)
+            l.extend(self.midOrderTraversal(root.right))
+        return l
+    def laterOrderTraversal(self, root):
+        l = []
+        if root != None:
+            l.extend(self.laterOrderTraversal(root.left))
+            l.extend(self.laterOrderTraversal(root.right))
+            l.extend(root.val)
+        return l
+    def depthSearch(self, root):
+        stack = []
+        l = []
+        stack.append(root)
+        while len(stack) != 0:
+            node = stack.pop()
+            l.append(node.val)
+            if node.right != None:
+                stack.append(node.right)
+            if node.left != None:
+                stack.append(node.left)
+        return l
+    def breadthSearch(self, root):
+        queue = []
+        l = []
+        queue.append(root)
+        while len(queue) != 0:
+            node = queue.pop(0)
+            l.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return l
+
+a = tree('a')
+b = tree('b')
+c = tree('c')
+d = tree('d')
+e = tree('e')
+f = tree('f')
+g = tree('g')
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+c.left = f
+c.right = g
+s = tree_op()
+print(s.preOrderTraversal(a))
+print(s.depthSearch(a))
+print(s.breadthSearch(a))
+print(s.midOrderTraversal(a))
