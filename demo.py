@@ -741,6 +741,121 @@ print(s.FindGreatestSumOfSubArray([-2,-8,-1,-6]))
 """
 
 """
+# 整数中1出现的次数
+class Solution:
+    def NumberOf1Between1AndN_Solution(self, n):
+        count = 0
+        i = 1
+        while (n // i) != 0:
+            current = (n // i) %10 # 当前位数字
+            before = n // (i * 10) # 高位数字
+            after = n - (n // i) * i # 低位数字
+            if current == 0:
+                # 如果为0，出现1的次数有高位决定，等于高位数字*当前位数
+                count += before * i
+            elif current == 1:
+                # 如果为1，出现1的次数由高位和低位决定，高位*当前位+低位+1
+                count += before * i + after + 1
+            else:
+                # 如果大于1，出现1的次数由高位决定，（高位数字+1）*当前位数
+                count += (before + 1) * i
+            i = i * 10
+        return count
+"""
+
+"""
+# 把数组排成最小的数
+class Solution:
+    def PrintMinNumber(self, numbers):
+        if not numbers:
+            return ''
+        num = map(str, numbers)
+        num.sort(lambda x, y: cmp(x + y, y + x))
+        return ''.join(num)
+"""
+
+"""
+# 丑数
+class Solution:
+    def GetUglyNumber_Solution(self, index):
+        if index <= 0:
+            return 0
+        uglyList = [1]
+        index2, index3, index5 = 0, 0, 0
+        for i in range(index - 1):
+            newUgly = min(uglyList[index2] * 2, uglyList[index3] * 3, uglyList[index5] * 5)
+            uglyList.append(newUgly)
+            if newUgly % 2 == 0:
+                index2 += 1
+            if newUgly % 3 == 0:
+                index3 += 1
+            if newUgly % 5 == 0:
+                index5 += 1
+        return uglyList[-1]
+"""
+
+"""
+# 第一个出现一次的字符
+class Solution:
+    def FirstNotRepeatingChar(self, s):
+        if not s:
+            return -1
+        s_num = {x: 0 for x in set(s)}
+        print(s_num)
+        for i in s:
+            s_num[i] += 1
+        for i, j in enumerate(s):
+            if s_num[j] == 1:
+                return i
+s = Solution()
+print(s.FirstNotRepeatingChar('google'))
+"""
+
+"""
+# 数组中的逆序对
+count = 0
+class Solution:
+    def InversePairs(self, data):
+        global count
+        def MergeSort(lists):
+            global count
+            if len(lists) <= 1:
+                return lists
+            num = int(len(lists) / 2)
+            left = MergeSort(lists[:num])
+            right = MergeSort(lists[num:])
+            print('left:', left)
+            print('right:', right)
+            r, l=0, 0
+            result=[]
+            while l<len(left) and r<len(right):
+                if left[l] < right[r]:
+                    result.append(left[l])
+                    l += 1
+                else:
+                    result.append(right[r])
+                    r += 1
+                    count += len(left)-l
+                    print('count:', count)
+            print(result)
+            result += right[r:]
+            print(result)
+            result += left[l:]
+            print(result)
+            return result
+        MergeSort(data)
+        return count % 1000000007
+s = Solution()
+print(s.InversePairs([1,2,3,4,5,6,7,0]))
+"""
+
+"""
+# 两个链表的第一个公共结点"""
+class Solution:
+    def FindFirstCommonNode(self, pHead1, pHead2):
+
+
+"""
 # 二叉树的深度
 class Solution:
     def TreeDepth(self, pRoot):
@@ -831,7 +946,7 @@ def coin(coins, price):
 coin([25, 21, 10, 5, 1], 63)"""
 
 """
-# 树的先中后序遍历，深度优先遍历，广度优先遍历"""
+# 树的先中后序遍历，深度优先遍历，广度优先遍历
 class tree:
     def __init__(self, x):
         self.val = x
@@ -901,4 +1016,36 @@ s = tree_op()
 print(s.preOrderTraversal(a))
 print(s.depthSearch(a))
 print(s.breadthSearch(a))
-print(s.midOrderTraversal(a))
+print(s.midOrderTraversal(a))"""
+
+"""
+# 排序
+def mergeSort(data):
+    if len(data) <= 1:
+        return data
+    lenth = len(data) // 2
+    left = mergeSort(data[: lenth])
+    right = mergeSort(data[lenth :])
+    result = []
+    l, r = 0, 0
+    while len(left) > l and len(right) > r:
+        if left[l] < right[r]:
+            result.append(left[l])
+            l += 1
+        else:
+            result.append(right[r])
+            r += 1
+    result += right[r :]
+    result += left[l :]
+    return result
+def quickSort(data):
+    if len(data) <= 1:
+        return data
+    mid = data[0]
+    left = quickSort([x for x in data if x < mid])
+    right = quickSort([x for x in data if x > mid])
+    return left + [mid] + right
+data = [2,3,1,6]
+print(mergeSort(data))
+print(quickSort(data))
+"""
