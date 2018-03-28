@@ -850,10 +850,55 @@ print(s.InversePairs([1,2,3,4,5,6,7,0]))
 """
 
 """
-# 两个链表的第一个公共结点"""
+# 两个链表的第一个公共结点
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 class Solution:
     def FindFirstCommonNode(self, pHead1, pHead2):
+        # write code here
+        if not pHead1 or not pHead2:
+            return None
+        count1, count2 = 0, 0
+        node1, node2 = pHead1, pHead2
+        while node1:
+            count1 += 1
+            node1 = node1.next
+        while node2:
+            count2 += 1
+            node2 = node2.next
+        node1, node2 = pHead1, pHead2
+        if count1 >= count2:
+            l = count1 - count2
+            num = count2
+            while l:
+                node1 = node1.next
+                l -= 1
+        else:
+            l = count2 - count1
+            num = count1
+            while l:
+                node2 = node2.next
+                l -= 1
+        while node1 != None and node2 != None and node1 != node2:
+            node1 = node1.next
+            node2 = node2.next
+        return node1
+"""
 
+"""
+# 数字在排序数组中出现的次数
+# 也可用二分查找变形做
+class Solution:
+    def GetNumberOfK(self, data, k):
+        if k not in data:
+            return 0
+        i = [x for x in data if x == k]
+        return len(i)
+s = Solution()
+print(s.GetNumberOfK([1, 2, 3, 3, 3, 3, 4, 5], 3))
+"""
 
 """
 # 二叉树的深度
@@ -863,6 +908,24 @@ class Solution:
             return 0
         return max(self.TreeDepth(pRoot.left), self.TreeDepth(pRoot.right)) + 1
 """
+
+"""
+# 平衡二叉树"""
+class Solution:
+    def IsBalanced_Solution(self, pRoot):
+        # write code here
+        if not pRoot:
+            return True
+        left = self.treedepth(pRoot.left)
+        right = self.treedepth(pRoot.right)
+        if abs(left - right) > 1:
+            return False
+        return (self.IsBalanced_Solution(pRoot.left) and self.IsBalanced_Solution(pRoot.right))
+
+    def treedepth(self, pRoot):
+        if not pRoot:
+            return 0
+        return max(self.treedepth(pRoot.left), self.treedepth(pRoot.right)) + 1
 
 """
 # 正则表达式
