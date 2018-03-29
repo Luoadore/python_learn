@@ -910,10 +910,10 @@ class Solution:
 """
 
 """
-# 平衡二叉树"""
+# 平衡二叉树
 class Solution:
     def IsBalanced_Solution(self, pRoot):
-        # write code here
+        # 每个结点遍历不止一次
         if not pRoot:
             return True
         left = self.treedepth(pRoot.left)
@@ -926,6 +926,41 @@ class Solution:
         if not pRoot:
             return 0
         return max(self.treedepth(pRoot.left), self.treedepth(pRoot.right)) + 1
+    # 想法：后序遍历时记录结点深度，作比较即可
+"""
+
+"""
+# 数组中只出现一次的数字
+# 异或^，将数组按某一位为1或是为0分开，再异或
+class Solution:
+    # 返回[a,b] 其中ab是出现一次的两个数字
+    def FindNumsAppearOnce(self, array):
+        if len(array) == 0 or array == 1:
+            return array
+        a = [x for x in array if array.count(x) == 1]
+        return a
+"""
+
+"""
+# 和为S的连续整数序列"""
+class Solution:
+    def FindContinuousSequence(self, tsum):
+        num = tsum
+        result = []
+        for i in range(1, num + 1):
+            sum = 0
+            for j in range(i, num + 1):
+                sum += j
+                if sum == tsum:
+                    l = [x for x in range(i, j + 1)]
+                    if len(l) >1:
+                        result.append(l)
+                    break
+                if sum > tsum:
+                    break
+        return result
+s = Solution()
+print(s.FindContinuousSequence(3))
 
 """
 # 正则表达式
