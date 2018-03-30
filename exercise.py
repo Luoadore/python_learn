@@ -455,4 +455,91 @@ assert t2 == 1433121030.0, t2
 
 print('Pass')"""
 
-"""exercise 30"""
+"""exercise 30
+import base64
+def safe_base64_decode(s):
+    if len(s) % 4 != 0:
+        num = 4 - len(s) % 4
+        for i in range(num):
+            if type(s) == bytes:
+                s += b'='
+            else:
+                s += '='
+    return base64.b64decode(s)
+assert b'abcd' == safe_base64_decode(b'YWJjZA=='), safe_base64_decode('YWJjZA==')
+assert b'abcd' == safe_base64_decode(b'YWJjZA'), safe_base64_decode('YWJjZA')
+print('pass')
+"""
+
+""" exercise 31
+import struct
+def bmpinfo(path):
+    f = open(path, 'rb')
+    s = f.read(30)
+    s_unpack = struct.unpack('<ccIIIIIIHH', s)
+    if s_unpack[0] == b'B' and (s_unpack[1] == b'A' or s_unpack[1] == b'M'):
+        print('位图大小:', s_unpack[6], 'x', s_unpack[7])
+        print('Number of colors:', s_unpack[-1])
+    else:
+        print('不是位图。')
+bmpinfo('E:\star.bmp')
+bmpinfo('E:\Git-2.12.0-64-bit.exe')
+"""
+
+""" exercise 32
+import hashlib
+def calc_md5(password):
+    md5 = hashlib.md5()
+    md5.update(password.encode('utf-8'))
+    return md5.hexdigest()
+def login(user, password):
+    p = calc_md5(password + user + 'the-Salt')
+    if p == db[user]:
+        print('Register success!')
+    else:
+        print('User name or password wrong!')
+def register(user, password):
+    db[user] = calc_md5(password + user + 'the-Salt')
+db = {}
+register('bob', '123456')
+register('alice', 'kristy')
+register('mike', '1993girl')
+print(db)
+login('bob', '12345')
+login('mike', '1993girl')
+"""
+
+""" exercise 33"""
+from html.parser import HTMLParser
+import re
+
+liststr = []
+time_list = []
+local_list = []
+
+class MyHTMLParser(HTMLParser):
+    tempstr = str()
+    matchObg = False
+    def handle_starttag(self, tag, attrs):
+        m = re.compile(r'event\-\w')
+        s = [x[1] for x in attrs if x[0] == 'class']
+        if len(s) > 0:
+            matchObj = m.match(s[0])
+        print(matchObj)
+        if matchObj:
+            self.matchObg = True
+            self.tempstr = ''
+    def handle_endtag(self, tag):
+        if self.matchObg:
+            liststr.append(self.tempstr)
+    def handle_data(self, data):
+        if (data.isspace() == False):
+            self.tempstr += data + '\t'
+
+with open('E:/test.html', 'r') as f:
+    html = f.readlines()
+    par = MyHTMLParser()
+    for i in range(500):
+        par.feed(html[i])
+    for value in liststr:
+        print(value)
