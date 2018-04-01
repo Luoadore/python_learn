@@ -942,7 +942,7 @@ class Solution:
 """
 
 """
-# 和为S的连续整数序列"""
+# 和为S的连续整数序列
 class Solution:
     def FindContinuousSequence(self, tsum):
         num = tsum
@@ -961,7 +961,250 @@ class Solution:
         return result
 s = Solution()
 print(s.FindContinuousSequence(3))
+"""
 
+"""
+# 和为s的两个数
+class Solution:
+    def FindNumbersWithSum(self, array, tsum):
+        small, big = 0, len(array) - 1
+        s = []
+        while small < big:
+            sum_a = array[small] + array[big]
+            if sum_a == tsum:
+                s.append([array[small], array[big]])
+            if sum_a > tsum:
+                big -= 1
+            else:
+                small += 1
+        if len(s) > 0:
+            mul = [x[0] * x[1] for x in s]
+            arg = mul.index(min(mul))
+            s = s[arg]
+        return s
+s = Solution()
+print(s.FindNumbersWithSum([1,2,4,5,10,11,15], 15))
+"""
+
+"""
+# 左旋转字符串
+# 原理： YX = (XTYT)T，字符串转置
+class Solution:
+    def LeftRotateString(self, s, n):
+        if len(s) == 0 or n == 0:
+            return s
+        if n > len(s):
+            n = n % len(s)
+        x1 = [s[i] for i in range(n)]
+        x2 = [s[i] for i in range(n, len(s))]
+        x2.extend(x1)
+        return ''.join(x2)
+s = Solution()
+print(s.LeftRotateString('abcXYZdef', 3))
+"""
+
+"""
+# 反转单词顺序列
+class Solution:
+    def ReverseSentence(self, s):
+        if len(s) == 0 or s.isspace():
+            return s
+        sen = s.split()
+        sentence = [sen[i] for i in range(-1, -(len(sen) + 1), -1)]
+        return ' '.join(sentence)
+s = Solution()
+print(s.ReverseSentence('I am a student'))
+print(s.ReverseSentence((' ')))
+"""
+
+"""
+# 扑克牌顺子
+class Solution:
+    def IsContinuous(self, numbers):
+        if len(numbers) > 5:
+            return False
+        Flag = False
+        numbers = [x for x in numbers if x != 0]
+        c = [numbers.count(x) for x in numbers]
+        if sum(c) != len(c):
+            return Flag
+        if len(numbers) == 1:
+            Flag = True
+            return Flag
+        numbers.sort()
+        count = 0
+        for i in range(len(numbers) - 1):
+            x = numbers[i + 1] - numbers[i]
+            if x != 1:
+                count += (x - 1)
+        if count == 5 - len(numbers):
+            Flag = True
+        return Flag
+s = Solution()
+print(s.IsContinuous([0,1,3,0,5]))
+print(s.IsContinuous([1,0,0,0,6]))
+"""
+
+"""
+# 孩子们的游戏（圆圈中最后剩下的数）
+class Solution:
+    def LastRemaining_Solution(self, n, m):
+        if m <= 1 or n == 0:
+            return -1
+        kids = [x for x in range(n)]
+        index = 0
+        while len(kids) > 1:
+            index += m - 1
+            index = index % len(kids)
+            kids.pop(index)
+        return kids[0]
+"""
+
+"""
+# 求1+2+3+...+n，不使用关键字及条件语句
+class Solution:
+    def __init__(self):
+        self.sum = 0
+    def Sum_Solution(self, n):
+        # write code here
+        self.sum += n
+        s = (n > 0) and self.Sum_Solution(n - 1)
+        return self.sum
+s = Solution()
+print(s.Sum_Solution(5))
+"""
+
+"""
+# 不用加减乘除做加法
+class Solution:
+    def Add(self, num1, num2):
+        a = (num1 ^ num2) & 0xFFFFFFFF
+        b = (num1 & num2) << 1
+        while b != 0:
+            x, y = a, b
+            a = (x ^ y) & 0xFFFFFFFF
+            b = (x & y) << 1
+        return a if a >> 31 == 0 else a - pow(2, 32)
+s = Solution()
+print(s.Add(5,17))
+"""
+
+"""
+# 把字符串转换成整数
+class Solution:
+    def StrToInt(self, s):
+        try:
+            return int(s)
+        except Exception as e:
+            return 0
+"""
+
+"""
+# 数组中重复的数字
+class Solution:
+    # 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]
+    # 函数返回True/False
+    def duplicate(self, numbers, duplication):
+        a = [numbers.count(x) for x in numbers]
+        d = [numbers[i] for i, j in enumerate(a) if j > 1]
+        print(d)
+        if len(d) > 0:
+            duplication[0] = d[0]
+        if len(duplication):
+            print(duplication[0])
+            return True
+        else:
+            return False
+s = Solution()
+print(s.duplicate([2,1,3,0,4],[]))
+"""
+
+"""
+# 构建乘积数组
+class Solution:
+    def multiply(self, A):
+        B = [1, A[0]] # 下三角连乘
+        C = [1, A[-1]] # 上三角连乘
+        for i in range(1, len(A) - 1):
+            B.append(B[i] * A[i])
+            C.append((C[i] * A[len(A) - i - 1]))
+        D = [B[i] * C[len(B) - i - 1] for i in range(len(B))]
+        return D
+s = Solution()
+print(s.multiply([2, 3, 4]))
+"""
+
+"""
+# 表示数值的字符串
+class Solution:
+    # s字符串
+    def isNumeric(self, s):
+        import re
+        m_integer = re.compile(r'^[+|-]?\d+$')
+        m_in_k = re.compile(r'^[+|-]?\d*[e|E][+|-]?\d+$')
+        m_float = re.compile(r'^[+|-]?\d*\.\d+$')
+        m_f_ke = re.compile(r'^[+|-]?\d*\.\d+[e|E][+|-]?\d+$')
+        print(m_integer.match(s))
+        print(m_float.match(s))
+        print(m_in_k.match(s))
+        print(m_f_ke.match(s))
+        if m_integer.match(s) or m_float.match(s) or m_in_k.match(s) or m_f_ke.match(s):
+            return True
+        return False
+s = Solution()
+print(s.isNumeric('1+100'))
+"""
+
+"""
+# 字符流中第一个不重复的字符
+class Solution:
+    # 返回对应char
+    def __init__(self):
+        self.s = ''
+        self.dict = {}
+    def FirstAppearingOnce(self):
+        for i in self.s:
+            if self.dict[i] == 1:
+                return i
+        return '#'
+    def Insert(self, char):
+        self.s += char
+        if char in self.dict:
+            self.dict[char] += 1
+        else:
+            self.dict[char] = 1
+"""
+
+"""
+# 链表中换的入口结点
+class Solution:
+    def EntryNodeOfLoop(self, pHead):
+        if not pHead:
+            return pHead
+        if not pHead.next:
+            return pHead.next
+        next_list = []
+        while pHead:
+            next_list.append(pHead)
+            pHead = pHead.next
+            if pHead in next_list:
+                return pHead
+"""
+
+"""
+# 删除链表中重复的点"""
+class Solution:
+    def deleteDuplication(self, pHead):
+        if not pHead or not pHead.next:
+            return pHead
+        node = pHead
+        while node:
+            n_next = node.next
+            if n_next.val == node:
+                n = n_next.next
+                while n.val == n_next.val:
+                    n = n.next
+                
 """
 # 正则表达式
 class Solution:
