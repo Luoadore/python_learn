@@ -1120,6 +1120,28 @@ print(s.duplicate([2,1,3,0,4],[]))
 """
 
 """
+# 正则表达式
+class Solution:
+    # s, pattern都是字符串
+    def match(self, s, pattern):
+        if len(s) == 0 and len(pattern) == 0:
+            return True
+        if len(pattern) == 0 and len(s) != 0:
+            return False
+        if len(pattern) > 1 and pattern[1] == '*':
+            if len(s) > 0 and (s[0] == pattern[0] or pattern[0] == '.'):
+                # 匹配2个字符，匹配1个字符，匹配0个字符
+                return (self.match(s[1:], pattern) or self.match(s[1:], pattern[2:]) or self.match(s, pattern[2:]))
+            else:
+                return self.match(s, pattern[2:])
+        if len(s) != 0 and (pattern[0] == '.' or pattern[0] == s[0]):
+            return self.match(s[1:], pattern[1:])
+        return False
+s = Solution()
+print(s.match('bbbba', '.*a*a'))
+"""
+
+"""
 # 构建乘积数组
 class Solution:
     def multiply(self, A):
@@ -1176,7 +1198,7 @@ class Solution:
 """
 
 """
-# 链表中换的入口结点
+# 链表中环的入口结点
 class Solution:
     def EntryNodeOfLoop(self, pHead):
         if not pHead:
@@ -1192,40 +1214,47 @@ class Solution:
 """
 
 """
-# 删除链表中重复的点"""
+# 删除链表中重复的点
+# 非递归：加入一个头节点，设置两个指针
+# 递归
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 class Solution:
     def deleteDuplication(self, pHead):
         if not pHead or not pHead.next:
             return pHead
-        node = pHead
-        while node:
-            n_next = node.next
-            if n_next.val == node:
-                n = n_next.next
-                while n.val == n_next.val:
-                    n = n.next
-                
-"""
-# 正则表达式
-class Solution:
-    # s, pattern都是字符串
-    def match(self, s, pattern):
-        if len(s) == 0 and len(pattern) == 0:
-            return True
-        if len(pattern) == 0 and len(s) != 0:
-            return False
-        if len(pattern) > 1 and pattern[1] == '*':
-            if len(s) > 0 and (s[0] == pattern[0] or pattern[0] == '.'):
-                # 匹配2个字符，匹配1个字符，匹配0个字符
-                return (self.match(s[1:], pattern) or self.match(s[1:], pattern[2:]) or self.match(s, pattern[2:]))
+        head = pHead.next
+        if head.val != pHead.val:
+            pHead.next = self.deleteDuplication(pHead.next)
+        else:
+            while head.val == pHead.val and head.next != None:
+                head = head.next
+            if head.val != pHead.val:
+                pHead = self.deleteDuplication(head)
             else:
-                return self.match(s, pattern[2:])
-        if len(s) != 0 and (pattern[0] == '.' or pattern[0] == s[0]):
-            return self.match(s[1:], pattern[1:])
-        return False
+                return None
+        return pHead
 s = Solution()
-print(s.match('bbbba', '.*a*a'))
-"""
+a = ListNode(1)
+b = ListNode(2)
+c = ListNode(3)
+d = ListNode(3)
+e = ListNode(4)
+f = ListNode(4)
+g = ListNode(5)
+a.next = b
+b.next = c
+c.next = d
+d.next = e
+e.next = f
+f.next = g
+def show(node):
+    while node:
+        print(node.val)
+        node = node.next
+show(s.deleteDuplication(a))"""
 
 """
 # 二叉树的下一个节点
@@ -1251,9 +1280,150 @@ class Solution:
 """
 
 """
-# 平衡二叉树
+# 对称的二叉树
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 class Solution:
-    def IsBalanced_Solution(self, pRoot):"""
+    def isSymmetrical(self, pRoot):
+        if pRoot == None:
+            return True
+        return self.compare(pRoot.left, pRoot.right)
+    def compare(self, pLeft, pRight):
+        if pLeft == None and pRight == None:
+            return True
+        if pLeft == None and pRight != None:
+            return False
+        if pLeft != None and pRight == None:
+            return False
+        if pLeft.val == pRight.val:
+            return self.compare(pLeft.left, pRight.right) and self.compare(pLeft.right, pRight.left)
+"""
+
+"""
+# 按之字形顺序打印二叉树
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+class Solution:
+    def Print(self, pRoot):
+        stack = []
+        queue = []
+        z = []
+        if not pRoot:
+            return z
+        queue.append(pRoot)
+        while len(queue) != 0 or len(stack) != 0:
+            x = []
+            while len(queue) != 0:
+                node = queue.pop()
+                x.append(node.val)
+                if node.left:
+                    stack.append(node.left)
+                if node.right:
+                    stack.append(node.right)
+            if len(x) != 0:
+                z.append(x)
+            y = []
+            while len(stack) != 0:
+                node = stack.pop()
+                y.append(node.val)
+                if node.right:
+                    queue.append(node.right)
+                if node.left:
+                    queue.append(node.left)
+            if len(y) != 0:
+                z.append(y)
+        return z
+"""
+
+"""
+# 把二叉树打印成多行
+class Solution:
+    # 返回二维列表[[1,2],[4,5]]
+    def Print(self, pRoot):
+        stack1 = []
+        stack2 = []
+        z = []
+        if not pRoot:
+            return z
+        stack1.append(pRoot)
+        while len(stack2) != 0 or len(stack1) != 0:
+            x = []
+            while len(stack1) != 0:
+                x, stack2 = self.treelayer(stack1, stack2)
+            if len(x) != 0:
+                z.append(x)
+            y = []
+            while len(stack2) != 0:
+                y, stack1 = self.treelayer(stack2, stack1)
+            if len(y) != 0:
+                z.append(y)
+        return z
+    def treelayer(self, stack1, stack2):
+        x = []
+        while len(stack1) != 0:
+            node = stack1.pop(0)
+            x.append(node.val)
+            if node.left:
+                stack2.append(node.left)
+            if node.right:
+                stack2.append(node.right)
+        return x, stack2
+"""
+
+"""
+# 序列化二叉树
+class Solution:
+    flag = -1
+    def Serialize(self, root):
+        if not root:
+            return '#'
+        return str(root.val) + ',' + self.Serialize(root.left) + ',' + self.Serialize(root.right)
+    def Deserialize(self, s):
+        self.flag += 1
+        if self.flag >= len(s):
+            return None
+        l = s.split(',')
+        root = None
+        if l[self.flag] != '#':
+            root = TreeNode(int(l[self.flag]))
+            root.left = self.Deserialize(s)
+            root.right = self.Deserialize(s)
+        return root
+"""
+
+"""
+# 二叉搜索树的第k个结点
+class Solution:
+    # 返回对应节点TreeNode
+    index = 0
+    def KthNode(self, pRoot, k):
+        if not pRoot or self.index > k:
+            return None
+        left = self.KthNode(pRoot.left, k)
+        if left != None:
+            return left
+        self.index += 1
+        if self.index == k:
+            return pRoot
+        right = self.KthNode(pRoot.right, k)
+        if right != None:
+            return right
+        return None
+"""
+
+"""
+# 数据流中的中位数"""
+class Solution:
+    def Insert(self, num):
+        pass
+    def GetMedian(self):
+        pass
 
 """
 # m种颜色n个扇形
