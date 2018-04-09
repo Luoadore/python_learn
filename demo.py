@@ -1560,3 +1560,58 @@ data = [2,3,1,6]
 print(mergeSort(data))
 print(quickSort(data))
 """
+
+##################### 动态规划 #######################
+
+"""
+# 全排列
+def permutation(s, begin, end):
+    if begin == end:
+        print(s)
+    else:
+        for i in range(begin, end + 1):
+            s[i], s[begin] = s[begin], s[i]
+            permutation(s, begin + 1, end)
+            s[i], s[begin] = s[begin], s[i]
+
+permutation(['a','b','c'], 0, 2)
+"""
+
+"""
+# 01背包问题
+import numpy as np
+def FindMax(numbers, capacity, w, v):
+    V = np.zeros([numbers + 1, capacity + 1])
+    w = [0] + w
+    v = [0] + v
+    for i in range(1, numbers + 1):
+        for j in range(1, capacity + 1):
+            if j < w[i]:
+                V[i][j] = V[i-1][j]
+            if j >= w[i]:
+                V[i][j] = max(V[i-1][j], V[i-1][j-w[i]] + v[i])
+    return V
+
+def FindWhat(V, w, v):
+    max_v = V[-1][-1]
+    i = len(w)
+    j = len(V[0]) - 1
+    w = [0] + w
+    v = [0] + v
+    permu = np.zeros([i + 1])
+    while i >= 0:
+        if max_v == V[i-1][j]:
+            permu[i] = 0
+        if max_v == V[i-1][j - w[i]] + v[i] and j - w[i] >= 0:
+            max_v = max_v - v[i]
+            j = j - w[i]
+            permu[i] = 1
+        i = i - 1
+    return permu
+number = 4
+capacity = 8
+w = [2,3,4,5]
+v = [3,4,5,6]
+V = FindMax(number, capacity, w, v)
+print(V)
+print(FindWhat(V, w, v))"""
