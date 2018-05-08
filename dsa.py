@@ -1,5 +1,5 @@
 # coding: utf-8
-
+"""
 # 两个链表有相同的结点
 class node():
     def __init__(self, x):
@@ -39,13 +39,13 @@ d = node(4)
 e = node(5)
 f = node(6)
 g = node(7)
-"""a.next = b
+a.next = b
 b.next = c
 c.next = f
 d.next = e
 e.next = f
 f.next = g
-print(findfirstcommonnode(a, d).val)"""
+print(findfirstcommonnode(a, d).val)
 
 # 链表中有环
 def findRing(phead):
@@ -89,3 +89,25 @@ print(find2sum([1,2,4,7,10,11,15],15))
 
 def findnsum(s):
     small, big = 1, 2
+"""
+
+# 归并排序，时间复杂度O(nlogn)，空间复杂度O(n)，稳定
+def mergesort(array):
+    if len(array) <= 1:
+        return array
+    mid = len(array) // 2
+    left = mergesort(array[: mid])
+    right = mergesort(array[mid :])
+    result = []
+    l, r = 0, 0
+    while len(left) > l and len(right) > r:
+        if left[l] < right[r]:
+            result.append(left[l])
+            l += 1
+        else:
+            result.append(right[r])
+            r += 1
+    result += right[r:]
+    result.extend(left[l:])
+    return result
+print(mergesort([2,3,1,6]))
