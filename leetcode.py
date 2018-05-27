@@ -1,7 +1,8 @@
 # coding: utf-8
 # Luo ya'nan
+
 # Remove duplicates from sorted array
-# 
+# O(n) O(1)
 def remove_dup(nums):
     if len(nums) == 0:
         return None
@@ -20,3 +21,17 @@ def remove_dup(nums):
     return len(nums) 
 
 print(remove_dup([1,1]))
+
+# Remove duplicates from sorted array 2
+# O(n) O(1)
+def remove_dup(nums):
+    if len(nums) <= 2: 
+        return len(nums)
+    index = 2
+    for i in range(2, len(nums)):
+        if nums[index - 2] != nums[i]:
+            nums[index] = nums[i]
+            index += 1
+    return index
+
+print(remove_dup([1,1,1,2,3,4]))
