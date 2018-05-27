@@ -509,7 +509,8 @@ login('bob', '12345')
 login('mike', '1993girl')
 """
 
-""" exercise 33"""
+""" exercise 33
+# !!!!!!!NOT CORRECT YET!!!!!!
 from html.parser import HTMLParser
 import re
 
@@ -542,4 +543,29 @@ with open('E:/test.html', 'r') as f:
     for i in range(500):
         par.feed(html[i])
     for value in liststr:
-        print(value)
+        print(value)"""
+
+"""exercise 34"""
+# coroutine 协程，一个线程执行
+# generator
+def consumer():
+    r = ''
+    while True:
+        n = yield r
+        if not n:
+            return
+        print('[CONSUMER] Consuming %s...' % n)
+        r = '200 OK'
+
+def produce(c):
+    c.send(None)
+    n = 0
+    while n < 5:
+        n = n + 1
+        print('[PRODUCER] Producing %s...' % n)
+        r = c.send(n)
+        print('[PRODUCER] Consumer return: %s' % r)
+    c.close()
+
+c = consumer()
+produce(c)
