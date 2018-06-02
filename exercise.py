@@ -545,7 +545,7 @@ with open('E:/test.html', 'r') as f:
     for value in liststr:
         print(value)"""
 
-"""exercise 34"""
+"""exercise 34
 # coroutine 协程，一个线程执行
 # generator
 def consumer():
@@ -569,3 +569,19 @@ def produce(c):
 
 c = consumer()
 produce(c)
+"""
+
+""" exercise 35"""
+# kafka
+from kafka import KafkaProducer
+from kafka import KafkaConsumer
+import os
+from sys import argv
+
+producer = KafkaProducer(bootstrap_servers='127.0.0.1: 9092')
+# Topic = test
+producer.send('test', b'something')
+producer.flush()
+producer.close()
+
+consumer = KafkaConsumer('test', bootstrap_servers='127.0.0.1: 9092')
