@@ -35,3 +35,22 @@ def remove_dup(nums):
     return index
 
 print(remove_dup([1,1,1,2,3,4]))
+
+# 二叉树的中序遍历
+# 迭代的方法
+# 思路：从根节点开始，先将根节点压入栈，然后再将其所有左子结点压入栈，
+# 然后取出栈顶节点，保存节点值，再将当前指针移到其右子节点上，
+# 若存在右子节点，则在下次循环时又可将其所有左子结点压入栈中。
+def inorderTraversal(self, root):
+    stack = []
+    l = []
+    node = root
+    while len(stack) != 0 or node:
+        if node:
+            stack.append(node)
+            node = node.left
+        else:
+            node = stack.pop()
+            l.append(node.val)
+            node = node.right
+    return l
