@@ -41,7 +41,7 @@ print(remove_dup([1,1,1,2,3,4]))
 # 思路：从根节点开始，先将根节点压入栈，然后再将其所有左子结点压入栈，
 # 然后取出栈顶节点，保存节点值，再将当前指针移到其右子节点上，
 # 若存在右子节点，则在下次循环时又可将其所有左子结点压入栈中。
-def inorderTraversal(self, root):
+def inorderTraversal(root):
     stack = []
     l = []
     node = root
@@ -54,3 +54,55 @@ def inorderTraversal(self, root):
             l.append(node.val)
             node = node.right
     return l
+    
+# Maximal Square
+# DP
+# dp(i, j)=min(dp(i−1, j), dp(i−1, j−1), dp(i, j−1))+1.
+# 找到maxqlens
+def maximalSquare(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+    dp = [[] for _ in range(rows)]
+    for i in range(rows):
+        for _ in range(cols):
+            dp[i].append(0)  
+    for row in range(rows):
+        dp[row][0] = matrix[row][0]
+    for col in range(cols):
+        dp[0][col] = matrix[0][col]
+    for row in range(1, rows):
+        for cols in range(1, cols):
+            dp[row][col] = min(dp[row-1, col-1], dp[row, col-1], dp[row-1, col]) + 1
+    maxqlen = max(max(dp))
+    return maxqlen * maxqlen
+
+# 跳跃游戏
+# 贪心算法
+# 维护
+
+# 树的最大深度
+# 递归
+def max_depth(root):
+    if root == None:
+        return 0
+    return max(max_depth(root.right), max_depth(root.left)) + 1
+
+# 非递归
+def max_depth(root):
+    if root == None:
+        return 0
+    queue = []
+    queue.append(root)
+    height = 0
+    layer_num = len(queue)
+    while len(queue) != 0:
+        node = queue.pop(0)
+        layer_num -= 1
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+        if layer_num == 0:
+            height += 1
+            layer_num = len(queue)
+    return height
