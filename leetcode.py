@@ -78,7 +78,14 @@ def maximalSquare(matrix):
 
 # 跳跃游戏
 # 贪心算法
-# 维护
+# 维护一个变量reach，表示最远能到达的位置
+def can_jump(lists):
+	reach = 0
+	for i in range(len(lists)):
+		if i > reach or reach >= len(lists) - 1:
+			break
+		reach = max(reach, i + lists[i])
+	return reach >= len(lists) - 1
 
 # 树的最大深度
 # 递归
