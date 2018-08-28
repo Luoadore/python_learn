@@ -95,4 +95,34 @@ def topk(lists, k):
 # print(topk([1, 17, 3, 4, 5, 6, 7, 16, 9, 10, 11, 12, 13, 14, 15, 8], 4))
 
 # 快排
-# 
+# 分治
+# partition返回第一次快排的位置，之后再与k比较
+def top_k(lists, k):
+    def partition(lists, low, high):
+    	if len(lists) != 0 and low < high:
+    		flag = lists[low]
+    		while low < high:
+    			while low < high and lists[high] >= flag:
+    				high -= 1
+    			lists[low] = lists[high]
+    			while low < high and lists[low] <= flag:
+    				low += 1
+    			lists[high] = lists[low]
+    		lists[low] = flag
+    		return low
+    	return 0
+
+    low, high = 0, len(lists) - 1
+    index = partition(lists, low, high)
+    print(index)
+    while index != k - 1:
+    	if index > k - 1:
+    		high = index - 1
+    		index = partition(lists, low, high)
+    	if index < k - 1:
+    		low = index + 1
+    		index = partition(lists, low, high)
+    	print(index)
+    return lists[: k]
+
+print(top_k([1, 17, 3, 4, 5, 6, 7, 16, 9, 10, 11, 12, 13, 14, 15, 8], 4))
