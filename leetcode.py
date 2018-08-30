@@ -113,3 +113,35 @@ def max_depth(root):
             height += 1
             layer_num = len(queue)
     return height
+
+# 岛屿的数量
+# DFS 
+# 非递归
+def num_islands(grid):
+	count = 0
+
+	for i in range(len(grid)):
+		for j in range(len(grid[0])):
+
+			if grid[i][j] == '1':
+				count += 1
+
+				# stack dfs
+				stack = [(i, j)]
+
+				while len(stack) != 0:
+					i0, j0 = stack.pop()
+
+					if (i0 < 0 or i0 >= len(grid)) or
+					   (j0 < 0 or j0 >= len(grid[0])) or
+					   grid[i0][j0] == '0':
+					    continue
+
+					grid[i0][j0] = '0'
+
+					# add all 4neighbors
+					stack.append((i0 - 1, j0))
+					stack.append((i0, j0 + 1))
+					stack.append((i0 + 1, j0))
+					stack.append((i0, j0 - 1))
+	return count
