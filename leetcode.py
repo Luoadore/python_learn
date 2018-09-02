@@ -80,12 +80,12 @@ def maximalSquare(matrix):
 # 贪心算法
 # 维护一个变量reach，表示最远能到达的位置
 def can_jump(lists):
-	reach = 0
-	for i in range(len(lists)):
-		if i > reach or reach >= len(lists) - 1:
-			break
-		reach = max(reach, i + lists[i])
-	return reach >= len(lists) - 1
+    reach = 0
+    for i in range(len(lists)):
+        if i > reach or reach >= len(lists) - 1:
+            break
+        reach = max(reach, i + lists[i])
+    return reach >= len(lists) - 1
 
 # 树的最大深度
 # 递归
@@ -118,30 +118,75 @@ def max_depth(root):
 # DFS 
 # 非递归
 def num_islands(grid):
-	count = 0
+    count = 0
 
-	for i in range(len(grid)):
-		for j in range(len(grid[0])):
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
 
-			if grid[i][j] == '1':
-				count += 1
+            if grid[i][j] == '1':
+                count += 1
 
-				# stack dfs
-				stack = [(i, j)]
+                # stack dfs
+                stack = [(i, j)]
 
-				while len(stack) != 0:
-					i0, j0 = stack.pop()
+                while len(stack) != 0:
+                    i0, j0 = stack.pop()
 
-					if (i0 < 0 or i0 >= len(grid)) or
-					   (j0 < 0 or j0 >= len(grid[0])) or
-					   grid[i0][j0] == '0':
-					    continue
+                    if (i0 < 0 or i0 >= len(grid)) or \
+                       (j0 < 0 or j0 >= len(grid[0])) or \
+                       grid[i0][j0] == '0':
+                        continue
 
-					grid[i0][j0] = '0'
+                    grid[i0][j0] = '0'
 
-					# add all 4neighbors
-					stack.append((i0 - 1, j0))
-					stack.append((i0, j0 + 1))
-					stack.append((i0 + 1, j0))
-					stack.append((i0, j0 - 1))
-	return count
+                    # add all 4neighbors
+                    stack.append((i0 - 1, j0))
+                    stack.append((i0, j0 + 1))
+                    stack.append((i0 + 1, j0))
+                    stack.append((i0, j0 - 1))
+    return count
+
+# 01矩阵
+# 找出每个元素到最近的 0 的距离。
+# BFS，距离
+def updateMatrix(matrix):
+    import numpy as np
+    import sys
+    dist = np.zeros([len(matrix), len(matrix[0])])
+    queue = []
+    # 初始化: distance for each 0 cell is 0 and distance for each 1 is INT_MAX
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 0:
+                queue.append((i, j))
+            else:
+                dist[i][j] = sys.maxsize
+
+    # update & add new to queue
+    # 每次广度层次遍历上下左右四个节点
+    neighbor4 = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    while len(queue) != 0:
+        i0, j0 = queue.pop(0)
+        for r, c in neighbor4:
+            r0, c0 = i0 + r, j0 + c
+            if r0 < len(matrix) and r0 >= 0 and c0 < len(matrix[0]) and c0 >= 0:
+                if dist[i0][j0] + 1 < dist[r0][c0]:
+                    dist[r0][c0] = dist[i0][j0] + 1
+                    queue.append((r0, c0))
+
+    return dist
+
+# print(updateMatrix([[0,0,0],[0,1,0],[1,1,1]]))
+ 
+# 二叉树展开为链表
+# 原地：寻找右孩子的前序
+def flatten(root):
+	while root:
+		if root.left:
+			pre = root.left
+			while pre.right:
+				pre = pre.right
+			pre.right = root.right
+			root.right = root.left
+			root.left = None
+		root = root.right
