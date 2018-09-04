@@ -180,6 +180,7 @@ def updateMatrix(matrix):
  
 # 二叉树展开为链表
 # 原地：寻找右孩子的前序
+# 把左孩子变为右孩子，如果有右孩子，最后一个右孩子指向右子树
 def flatten(root):
 	while root:
 		if root.left:
@@ -190,3 +191,34 @@ def flatten(root):
 			root.right = root.left
 			root.left = None
 		root = root.right
+
+# 454四数相加
+# 思路：把四个数组分为两组，每组包含两个数组。
+# 其中一组中的任意两个值和存入hashmap中，然后在hashmap查找另外两个数组的值的组合。
+# 相当于转化为了一个two sum问题
+def four_sum_count(A, B, C, D):
+	AB = collections.Counter(a + b for a in A for b in B)
+	return sum(AB[-c-d] for c in C for d in D)
+
+def f_s_c(A, B, C, D):
+	# 会超时
+	AB = {}
+	for i in range(len(A)):
+		for j in range(len(B)):
+			sum1 = A[i] + B[j]
+			# 以下四句可以用AB[sum1] = AB.get(sum1, 0) + 1
+			if sum1 not in AB.keys():
+				AB[sum1] = 1
+			else:
+				AB[sum1] += 1
+
+	count = 0
+	for i in range(len(C)):
+		for j in range(len(D)):
+			sum2 = C[i] + D[j]
+			if -sum2 in AB.keys():
+				count += AB[-sum2]
+	return count
+
+# 797所有可能的路径
+# 有向无环图
