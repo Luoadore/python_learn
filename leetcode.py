@@ -461,3 +461,24 @@ class Solution(object):
                 max_area = each_area
         
         return max_area
+
+# 141 环形链表
+# 快慢双指针 时间复杂度O(n),空间复杂度O(1)
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        if head == None or head.next == None:
+            return False
+        fast, slow = head.next, head
+        while fast != slow:
+            if fast == None or fast.next == None:
+                return False
+            fast = fast.next.next
+            slow = slow.next
+        return True
