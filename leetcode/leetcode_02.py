@@ -198,3 +198,75 @@ class Solution:
                 deq.append((p.right, q.right))
                 deq.append((p.left, q.left))
         return True
+
+# 102 二叉树的层序遍历 中等
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+# BFS 广度优先遍历 将树上顶点按照层次依次放入队列结构， level和deque
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+    	"""
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        levels = []
+        if not root:
+            return levels
+
+        level = 0
+        queue = deque([root,])
+        while queue:
+            # start the current level
+            levels.append([])
+            # number of elements in the current level
+            level_length = len(queue)
+
+            for i in range(level_length):
+                node = queue.popleft()
+                # fullfill the current level
+                levels[level].append(node.val)
+
+                # add child nodes of the current level in the queue for the next level
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            # go to next level
+            level += 1
+
+        return levels
+
+# DFE 深度优先遍历 递归函数，参数是当前节点和节点的层次
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        levels = []
+        if not root:
+            return levels
+
+        def helper(node, level):
+            # start the current level
+            if len(levels) == level:
+                levels.append([])
+
+            # append the current node value
+            levels[level].append(node.val)
+
+            # process child nodes for the next level
+            if node.left:
+                hepler(node.left, level + 1)
+            if node.right:
+                helper(node.right, level + 1)
+
+            helper(root, 0)
+            return levels
