@@ -264,9 +264,10 @@ class Solution:
 
             # process child nodes for the next level
             if node.left:
-                hepler(node.left, level + 1)
+                helper(node.left, level + 1)
             if node.right:
                 helper(node.right, level + 1)
 
-            helper(root, 0)
-            return levels
+        helper(root, 0)
+        return levels
+
