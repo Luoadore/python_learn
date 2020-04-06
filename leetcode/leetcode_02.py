@@ -271,3 +271,40 @@ class Solution:
         helper(root, 0)
         return levels
 
+# 942 增减字符串匹配 简单
+# 每次会把可以使用的数的集合中的最小值或最大值取出，并放到当前的位置
+class Solution:
+    def diStringMatch(self, S: str) -> List[int]:
+        lo, hi = 0, len(S)
+        res = []
+
+        for x in S:
+            if x == "I":
+                res.append(lo)
+                lo += 1
+            if x == "D":
+                res.append(hi)
+                hi -= 1
+        return res + [lo]
+
+# 53 最大子序和 简单
+# 动态规划
+# 状态定义 数组dp
+# 状态初始化
+# 状态转移条件 dp[i] = max(dp[i - 1], 0) + nums[i]
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+    
+        sum_curr = res = nums[0]
+        for i in range(1, len(nums)):
+            sum_curr = max(sum_curr, 0) + nums[i]
+            res = max(res, sum_curr)
+        
+        return res
+# 分治法
+# 定义基本情况
+# 将问题分解为子问题并递归地解决它们
+# 合并子问题的解获得原始问题的解
+# TODO：目前没太看懂cross sum
