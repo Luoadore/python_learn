@@ -308,3 +308,81 @@ class Solution:
 # 将问题分解为子问题并递归地解决它们
 # 合并子问题的解获得原始问题的解
 # TODO：目前没太看懂cross sum
+
+# 169 多数元素 简单
+# 哈希表（字典）
+# O(n) O(n) 
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        counts = collections.Counter(nums)
+        return max(counts.keys(), key=counts.get)
+
+# 排序
+# 如果将数组 nums 中的所有元素按照单调递增或单调递减的顺序排序，那么下标为「2/n」 的元素（下标从 0 开始）一定是众数。
+# O(nlogn)（排序的空间复杂度） O(logn)
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        return nums[len(nums)//2]
+
+# 分治
+# 直到所有的子问题都是长度为 1 的数组。长度为 1 的子数组中唯一的数显然是众数，直接返回即可。
+# 如果回溯后某区间的长度大于 1，我们必须将左右子区间的值合并。
+# 如果它们的众数相同，那么显然这一段区间的众数是它们相同的值。
+# 否则，我们需要比较两个众数在整个区间内出现的次数来决定该区间的众数。
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        def cross_major(left, right, lm, rm):
+            if lm == rm:
+                return lm
+            
+            lm_count = rm_count = 0
+            for each in left + right:
+                if each == lm:
+                    lm_count += 1
+                if each == rm:
+                    rm_count += 1
+            if lm_count > rm_count:
+                return lm
+            else:
+                return rm
+        
+        def major(nums):
+            if len(nums) == 1:
+                return nums[0]
+
+            mid = len(nums) // 2
+            lm = major(nums[0: mid])
+            rm = major(nums[mid:])
+            maj = cross_major(nums[0: mid], nums[mid:], lm, rm)
+            return maj
+        
+        return major(nums)
+
+# 863 二叉树中所有距离为K的结点 中等
+# DFS 深度优先搜索 + BFS 广度优先搜索
+# 如果节点有指向父节点的引用，也就知道了距离该节点 1 距离的所有节点。
+# 之后就可以从 target 节点开始进行深度优先搜索了。
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
+        def dfs(node, par=None):
+            if node:
+                node.par = par
+                dfs(node.left, node)
+                dfs(node.right, node)
+
+        dfs(root)
+
+        queue = collections.deque([(target, 0)])
+        seen = {target}
+        while queue:
+            if queue[0][1] == K:
+                return [node.val for node, d in queue]
+
+            node, d = queue.popleft()
+            for each in (node.left, node.right, node.par):
+                if each and each not in seen:
+                    seen.add(each)
+                    queue.append((each, d+1))
+
+        return []
