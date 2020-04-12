@@ -386,3 +386,88 @@ class Solution:
                     queue.append((each, d+1))
 
         return []
+
+# 257 二叉树的所有路径 简单
+# 迭代
+class Solution:
+    def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        def construct_paths(root, path):
+            if root:
+                path += rstr(oot.val)
+                if not root.left and not root.right:
+                    paths.append(path)
+                else:
+                    path += '->'
+                    construct_paths(root.left, path)
+                    construct_paths(root.right, path)
+
+        paths = []
+        construct_paths(root, '')
+        return paths
+
+# BFS
+# 队列维护一个节点和path
+class Solution:
+    def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        paths = []
+
+        if root:
+            deq = collections.deque([(root, str(root.val))])
+
+            while deq:
+                node, path = deq.popleft()
+                if not node.left and not node.right:
+                    paths.append(path)
+                else:
+                    path += '->'
+                    if node.left:
+                        deq.append((node.left, path + str(node.left.val)))
+                    if node.right:
+                        deq.append((node.right, path + str(node.right.val)))
+
+        return paths
+
+# 1023 驼峰式匹配 中等
+# 去掉模式中存在的字符，判断剩下的字符是否全是小写
+class Solution:
+    def camelMatch(self, queries: List[str], pattern: str) -> List[bool]:
+        res = []
+        for each in queries:
+            indices = []
+            flag = 0
+            for s in pattern:
+                try:
+                    indices.append(each.index(s))
+                except:
+                    flag = 1
+            for i in range(len(each)):
+                if (i not in indices) and (each[i] >= 'A' and each[i] <= 'Z'):
+                    flag = 1
+                    break
+            if flag == 0:
+                res.append(True)
+            else:
+                res.append(False)
+            
+        return res
+
+
+# 151 反转字符串的单词 中等
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        return ' '.join(reversed(s.split()))
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        res = []
+        p1 = p2 = 0
+        
+        while p2 < len(s) + 1:
+            if p2 == len(s) or s[p2] == ' ':
+                print('word:')
+                if p1 != p2:
+                    res = [s[p1:p2]] + res
+                p1 = p2 = p2 + 1
+            else:
+                p2 += 1
+
+        return ' '.join(res)
