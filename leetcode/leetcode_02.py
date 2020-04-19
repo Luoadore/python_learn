@@ -471,3 +471,104 @@ class Solution:
                 p2 += 1
 
         return ' '.join(res)
+
+# 445 两数相加 2 中等
+# 逆序处理链表，用栈存储
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        s1, s2 = [], []
+        while l1:
+            s1.append(l1.val)
+            l1 = l1.next
+        while l2:
+            s2.append(l2.val)
+            l2 = l2.next
+        
+        ans = None
+        carry = 0
+        while s1 or s2 or carry != 0:
+            a = 0 if not s1 else s1.pop()
+            b = 0 if not s2 else s2.pop()
+
+            cur = a + b + carry
+            carry = cur // 10
+            cur = cur % 10
+
+            curnode = ListNode(cur)
+            curnode.next = ans
+            ans = curnode
+        
+        return ans
+
+# 717 1比特和2比特字符 简单
+# O(n) O(1)
+# 线性扫描， i值增加1或2
+class Solution:
+    def isOneBitCharacter(self, bits: List[int]) -> bool:
+        i = 0
+        while i < len(bits) - 1:
+            i += bits[i] + 1
+        return i == len(bits) - 1
+# 贪心
+# 只需要查看倒数第二位到下一个0之间的1的个数，偶数个即为1比特
+class Solution:
+    def isOneBitCharacter(self, bits: List[int]) -> bool:
+        parity = bits.pop()
+        while bits and bits.pop(): 
+            parity ^= 1
+        return parity == 0
+
+# 456 132模式 中等
+# 先确定12，再使用 栈 来比较3
+class Solution:
+    def find132pattern(self, nums: List[int]) -> bool:
+        minj = [min(nums[:i + 1]) for i in range(len(nums))]
+
+        stack = []
+        for j in range(len(nums) - 1, -1, -1):
+            if nums[j] > minj[j]:
+                while len(stack) != 0 and stack[-1] <= minj[j]:
+                    stack.pop()
+                if len(stack) != 0 and stack[-1] < nums[j]:
+                    return True
+                stack.append(nums[j])
+        return False
+
+# 56 合并区间 中等
+# 按照第一维排序之后再判断
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort(key=lambda x: x[0])
+
+        merged = []
+        for interval in intervals:
+            if not merged and merged[-1][1] < interval[0]:
+                merged.append(interval)
+            else:
+                merged[-1][1] = max(merged[-1][1], interval[1])
+
+        return intervals
+
+# 542 01矩阵 中等
+# 广度优先搜索
+# 逆向思维 0到其他位置的距离，慢慢推开
+# O(rc) O(rc)
+class Solution:
+    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
+        m, n = len(matrix), len(matrix[0])
+        dist = [[0] * n for _ in range(m)]
+        zeroes_pos = [(i, j) for i in range(m) for j in range(n) if matrix[i][j] == 0]
+        # 将所有的0添加进初始队列
+        q = collections.deque(zeroes_pos)
+        seen = set(zeroes_pos)
+
+        # 广度优先搜索
+        while q:
+            i, j = q.popleft()
+            for ni, nj in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
+                if 0 <= ni < m and 0 <= nj < n and (ni, nj) not in seen:
+                    dist[ni][nj] = dist[i][j] + 1
+                    q.append((ni, nj))
+                    seen.add((ni, nj))
+
+        return dist
